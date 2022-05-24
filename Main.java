@@ -14,7 +14,7 @@ public class Main {
     int numTerms = 1000000;
 
     for (int thread = 0; thread < NUM_THREADS.length; thread++) {
-      Result[] results = new Result[NUM_EXEC];
+      Calc[] calcs = new Calc[NUM_EXEC];
       int numThreads = NUM_THREADS[thread];
       System.out.printf("\n\n #CALCULO DE PI UTILIZANDO %d THREADS# \n\n", numThreads);
 
@@ -39,15 +39,15 @@ public class Main {
 
         double runtime = (double) TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - start);
 
-        results[i] = new Result(pi, runtime);
+        calcs[i] = new Calc(pi, runtime);
       }
 
-      double averageRuntime = getAverageRuntime(results);
-      double standardDeviation = getStandardDeviation(results, averageRuntime);
+      double averageRuntime = getAverageRuntime(calcs);
+      double standardDeviation = getStandardDeviation(calcs, averageRuntime);
 
       System.out.println("\n##TEMPO DE EXECUÇÃO##:");
       for (int i = 0; i < NUM_EXEC; i++) {
-        results[i].showResult();
+        calcs[i].showCalc();
       }
 
       System.out.printf("\nmédia do tempo de execução: %.2f ms\n", averageRuntime);
@@ -81,20 +81,22 @@ public class Main {
     }
   }
 
-  private static double getStandardDeviation(Result[] results, double averageRuntime) {
+  private static double getStandardDeviation(Calc[] calcs, double averageRuntime) {
     double deviation = 0;
-    for (Result result : results) {
-      double aux = result.getRuntime() - averageRuntime;
-      deviation += Math.pow(aux, 2) / results.length;
+    for (Calc calc : calcs) {
+      double aux = calc.getRuntime() - averageRuntime;
+      deviation += Math.pow(aux, 2) / calcs.length;
     }
     return Math.sqrt(deviation);
   }
 
-  private static double getAverageRuntime(Result[] results) {
+  private static double getAverageRuntime(Calc[] calcs) {
     double sum = 0;
-    for (Result result : results) {
-      sum += result.getRuntime();
+    for (Calc calc : calcs) {
+      sum += calc.getRuntime();
     }
-    return sum / results.length;
+    return sum / calcs.length;
   }
+
+  
 }
