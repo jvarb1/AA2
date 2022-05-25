@@ -4,21 +4,20 @@ import java.util.concurrent.TimeUnit;
 public class Main {
 
   static final int[] NUM_THREADS = { 1, 2, 4, 8, 16, 32 };
-  static final int NUM_EXEC = 5;
 
   public static void main(String[] args) throws InterruptedException {
     Scanner scanner = new Scanner(System.in);
 
-    System.out.print("####Cálculo de π usando threads####\n");
+    System.out.print("\nCálculo de π usando threads\n");
     
     int numTerms = 1000000;
 
     for (int thread = 0; thread < NUM_THREADS.length; thread++) {
-      Calc[] calcs = new Calc[NUM_EXEC];
+      Calc[] calcs = new Calc[5];
       int numThreads = NUM_THREADS[thread];
-      System.out.printf("\n\n #CALCULO DE PI UTILIZANDO %d THREADS# \n\n", numThreads);
+      System.out.printf("\n**CALCULO DE PI UTILIZANDO %d THREADS** \n", numThreads);
 
-      for (int i = 0; i < NUM_EXEC; i++) {
+      for (int i = 0; i < 5; i++) {
         long start = System.nanoTime();
 
         CalcPiThread[] threads = new CalcPiThread[numThreads];
@@ -45,13 +44,14 @@ public class Main {
       double averageRuntime = getAverageRuntime(calcs);
       double standardDeviation = getStandardDeviation(calcs, averageRuntime);
 
-      System.out.println("\n##TEMPO DE EXECUÇÃO##:");
-      for (int i = 0; i < NUM_EXEC; i++) {
+     System.out.println("\nNÚMERO PI ENCONTRADO:\n ");
+      for (int i = 0; i < 5; i++) { 
+        System.out.println("----");
         calcs[i].showCalc();
       }
 
-      System.out.printf("\nmédia do tempo de execução: %.2f ms\n", averageRuntime);
-      System.out.printf("\ndesvio padrão do tempo de execução: %.2f ms\n", standardDeviation);
+      System.out.printf("\nmédia do tempo de execução: %.2f ms;\n", averageRuntime);
+      System.out.printf("\ndesvio padrão do tempo de execução: %.2f ms;\n", standardDeviation);
     }
   }
 
